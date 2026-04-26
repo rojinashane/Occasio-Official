@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Team | Occasio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:        #00686F;
+      --teal-dark:   #004D52;
+      --teal-bg:     #E8F5F5;
+      --teal-faint:  #F0F9FA;
+      --bg:          #F0F4F4;
+      --border:      #E2ECEC;
+      --text-dark:   #0D1B2A;
+      --text-mid:    #334155;
+      --text-muted:  #64748B;
+      --text-faint:  #94A3B8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text-mid);
+      -webkit-font-smoothing: antialiased;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    body.loaded { opacity: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(240, 244, 244, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,104,111,0.10);
+      padding: 0 40px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--teal-dark);
+      letter-spacing: -1.5px;
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 2px;
+      background: var(--teal);
+      border-radius: 1px;
+      transition: width 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--teal); }
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--teal);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0,104,111,0.28);
+    }
+
+    .nav-cta:hover { background: var(--teal-dark); transform: translateY(-1px); }
+    .nav-cta svg { width: 14px; height: 14px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 140px 40px 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--teal);
+      pointer-events: none;
+    }
+
+    .orb-tr { width: 380px; height: 380px; opacity: 0.10; top: -100px; right: -100px; }
+    .orb-bl { width: 240px; height: 240px; opacity: 0.07; bottom: -60px; left: -80px; }
+
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,104,111,0.08);
+      border: 1px solid rgba(0,104,111,0.16);
+      border-radius: 999px;
+      padding: 7px 16px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+
+    .eyebrow-text {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(40px, 6vw, 68px);
+      font-weight: 900;
+      color: var(--teal-dark);
+      letter-spacing: -2.5px;
+      line-height: 1.05;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-hero h1 .accent { color: var(--teal); }
+
+    .page-hero p {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .contact-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 40px 100px;
+    }
+
+    /* ── PROPONENTS ── */
+    .proponents-panel {
+      width: 100%;
+    }
+
+    .panel-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .panel-label span {
+      width: 18px; height: 2px;
+      background: var(--teal);
+      border-radius: 1px;
+      display: inline-block;
+    }
+
+    .panel-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--teal-dark);
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .panel-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .proponent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .proponent-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .proponent-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 8px 28px rgba(0,104,111,0.10);
+    }
+
+    .proponent-avatar {
+      width: 72px; height: 72px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--teal) 0%, #005E66 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+      box-shadow: 0 6px 16px rgba(0,104,111,0.22);
+      overflow: hidden;
+    }
+
+    .proponent-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    .proponent-info { flex: 1; min-width: 0; }
+    .proponent-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--teal-dark);
+      margin-bottom: 3px;
+    }
+    .proponent-role {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .proponent-course {
+      font-size: 13px;
+      color: var(--text-faint);
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+    .proponent-email {
+      font-size: 12px;
+      color: var(--teal);
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+    }
+    .proponent-email:hover { text-decoration: underline; }
+
+    .proponent-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: var(--teal-bg);
+      color: var(--teal);
+      border: 1px solid rgba(0,104,111,0.12);
+      border-radius: 999px;
+      padding: 5px 14px;
+      white-space: nowrap;
+    }
+
+    .proponent-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: var(--teal-bg);
+      color: var(--teal);
+      border: 1px solid rgba(0,104,111,0.12);
+      border-radius: 999px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+  
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--teal-dark);
+      padding: 60px 40px 40px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 32px;
+    }
+
+    .footer-logo {
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1.5px;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.45); max-width: 240px; line-height: 1.6; }
+
+    .footer-social { display: flex; gap: 12px; margin-top: 20px; }
+
+    .social-btn {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+
+    .social-btn:hover { background: rgba(255,255,255,0.15); }
+    .social-btn svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.7); }
+
+    .footer-links { display: flex; gap: 48px; }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.8);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      margin-bottom: 9px;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: rgba(255,255,255,0.85); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #34D399;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .page-hero { padding: 120px 24px 56px; }
+      .contact-wrapper { padding: 0 24px 80px; }
+      .proponents-panel { position: static; }
+      .footer-top { flex-direction: column; gap: 36px; }
+      .footer-links { flex-direction: column; gap: 28px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    .delay-1 { transition-delay: 0.08s; }
+    .delay-2 { transition-delay: 0.16s; }
+    .delay-3 { transition-delay: 0.24s; }
+    .delay-4 { transition-delay: 0.32s; }
+    .delay-5 { transition-delay: 0.40s; }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAV ══ -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      OCCASIO
+    </a>
+    <ul class="nav-links">
+      <li><a href="Occasio.html">Workspace</a></li>
+      <li><a href="Occasio.html#ai">Occasio AI</a></li>
+      <li><a href="Occasio.html#ar">Walkable AR</a></li>
+      <li><a href="Occasio.html#install">How to Install</a></li>
+      <li><a href="team.html" class="active">The Team</a></li>
+    </ul>
+    <a href="Occasio.html#install" class="nav-cta">
+      Get APK
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
+    </a>
+  </nav>
+
+  <!-- ══ PAGE HERO ══ -->
+  <div class="page-hero">
+    <div class="orb orb-tr"></div>
+    <div class="orb orb-bl"></div>
+
+    <div class="page-eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span class="eyebrow-text">Get in Touch</span>
+    </div>
+    <h1>Team <span class="accent">Occasio.</span></h1>
+    <p>Get to know the people behind Occasio.</p>
+  </div>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <div class="contact-wrapper">
+
+    <!-- LEFT: Proponents -->
+    <div class="proponents-panel">
+      <div class="panel-label reveal"><span></span>The Team</div>
+      <h2 class="panel-title reveal delay-1">Meet the<br>Proponents</h2>
+      <p class="panel-sub reveal delay-2">The people who built Occasio for Sorsogon City.</p>
+
+      <div class="proponent-list">
+        <!-- Member 1 -->
+        <div class="proponent-card reveal delay-2">
+          <div class="proponent-avatar">
+            <img src="shane.jpg" alt="Rojina Shane E. Habana" onerror="this.parentElement.textContent='RSH'" />
+          </div>
+          <div class="proponent-info">
+            <div class="proponent-name">Rojina Shane E. Habana</div>
+            <div class="proponent-role">Programmer</div>
+            <div class="proponent-course">BS Information Technology</div>
+            <a class="proponent-email" href="mailto:rojinashanehabana@thelewiscollege.edu.ph">rojinashanehabana@thelewiscollege.edu.ph</a>
+          </div>
+          <span class="proponent-badge">Dev</span>
+        </div>
+
+        <!-- Member 2 — fill in your details -->
+        <div class="proponent-card reveal delay-3">
+          <div class="proponent-avatar">
+             <img src="dave.jpg" alt="Dave Matthew S. Jebulan" onerror="this.parentElement.textContent='DMJ'" />
+          </div>
+          <div class="proponent-info">
+            <div class="proponent-name">Dave Matthew S. Jebulan</div>
+            <div class="proponent-role">System Analyst</div>
+            <div class="proponent-course">BS Information Technology</div>
+            <a class="proponent-email" href="mailto:davematthewjebulan@thelewiscollege.edu.ph">davematthewjebulan@thelewiscollege.edu.ph</a>
+          </div>
+          <span class="proponent-badge">Dev</span>
+        </div>
+
+        <!-- Member 3 — fill in your details -->
+        <div class="proponent-card reveal delay-4">
+          <div class="proponent-avatar">
+            <img src="ashley.jpg" alt="Ashley J. Panganiban" onerror="this.parentElement.textContent='AJP'" />
+          </div>
+          <div class="proponent-info">
+            <div class="proponent-name">Ashley J. Panganiban</div>
+            <div class="proponent-role">Documentarian</div>
+            <div class="proponent-course">BS Information Technology</div>
+            <a class="proponent-email" href="mailto:ashleyjpanganiban@thelewiscollege.edu.ph">ashleyjpanganiban@thelewiscollege.edu.ph</a>
+          </div>
+          <span class="proponent-badge">Dev</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">OCCASIO</div>
+          <div class="footer-tagline">Built for the future of Sorsogon events. Plan smarter, celebrate bigger.</div>
+          <div class="footer-social">
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Twitter">
+              <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="rgba(255,255,255,0.7)" stroke-width="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>App</h4>
+            <a href="Occasio.html#workspace">Workspace</a>
+            <a href="Occasio.html#ai">Occasio AI</a>
+            <a href="Occasio.html#ar">Walkable AR</a>
+            <a href="Occasio.html#screens">All Features</a>
+          </div>
+          <div class="footer-col">
+            <h4>About</h4>
+            <a href="#">Our Story</a>
+            <a href="#">Built for Sorsogon</a>
+            <a href="team.html">The Team</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Occasio. All rights reserved.</span>
+        <span>To Got Be The Higest Glory</span>
+        <div class="footer-badge">
+          <span class="badge-dot"></span>
+          Built for Sorsogon City
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal, .reveal-right').forEach(el => observer.observe(el));
+
+
+</script>
+</body>
+</html>
