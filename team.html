@@ -117,10 +117,52 @@
       align-items: center;
       gap: 8px;
       box-shadow: 0 8px 24px rgba(0,104,111,0.28);
+      position: relative;
+      animation: cta-pulse 2.4s ease-in-out infinite;
     }
 
-    .nav-cta:hover { background: var(--teal-dark); transform: translateY(-1px); }
-    .nav-cta svg { width: 14px; height: 14px; }
+    .nav-cta::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 999px;
+      background: var(--teal);
+      opacity: 0;
+      animation: cta-ring 2.4s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes cta-pulse {
+      0%, 100% { box-shadow: 0 8px 24px rgba(0,104,111,0.28); }
+      50%       { box-shadow: 0 8px 32px rgba(0,104,111,0.55); }
+    }
+
+    @keyframes cta-ring {
+      0%   { opacity: 0.5; transform: scale(1); }
+      70%  { opacity: 0;   transform: scale(1.55); }
+      100% { opacity: 0;   transform: scale(1.55); }
+    }
+
+    .nav-cta:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+      animation: none;
+    }
+
+    .nav-cta:hover::before { animation: none; }
+
+    .nav-cta svg {
+      width: 14px; height: 14px;
+      animation: cta-bounce 2.4s ease-in-out infinite;
+    }
+
+    @keyframes cta-bounce {
+      0%, 100% { transform: translateY(0); }
+      40%       { transform: translateY(2px); }
+      60%       { transform: translateY(-2px); }
+    }
+
+    .nav-cta:hover svg { animation: none; }
 
     /* ── PAGE HERO ── */
     .page-hero {
@@ -485,7 +527,7 @@
       <li><a href="team.html" class="active">The Team</a></li>
     </ul>
     <a href="https://expo.dev/accounts/sdi23/projects/occasio/builds/7ab9cf5d-f825-42fa-b48c-1e2efa4c7bed"
- class="nav-cta">
+ class="nav-cta" target="_blank" rel="noopener noreferrer">
       Get APK
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
     </a>
